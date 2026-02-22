@@ -56,3 +56,15 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 /generated/prisma
+
+
+# Project-specific / additional ignores
+# Prisma generated client inside src (if you generate locally)
+src/generated/
+# Local database files
+*.db
+# Node Prisma artifacts
+node_modules/.prisma
+# Windows / misc
+Thumbs.db
+Desktop.ini
