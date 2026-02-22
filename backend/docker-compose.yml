@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: motorlink_db
+    ports:
+      - "5432:5432" # Mapeia a porta do computador para a do container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Garante que os dados não sumam
+
+volumes:
+  postgres_data:
