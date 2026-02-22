@@ -4,7 +4,8 @@
   "sourceRoot": "src",
   "baseUrl": ".",
       "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/generated/*": ["src/generated/*"]
     },
   "compilerOptions": {
     "deleteOutDir": true
