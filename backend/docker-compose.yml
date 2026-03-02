@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16-alpine # Imagem oficial do PostgreSQL
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres # Defina seu usuário
+      POSTGRES_PASSWORD: postgres # Defina sua senha
+      POSTGRES_DB: motorlink_db # Nome do banco de dados inicial
+    ports:
+      - "5432:5432" # Porta host:Porta container
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persistência de dados
+    networks:
+      - postgres_net
+
+volumes:
+  pgdata: # Volume nomeado para persistir dados fora do container
+
+networks:
+  postgres_net:
+    driver: bridge
