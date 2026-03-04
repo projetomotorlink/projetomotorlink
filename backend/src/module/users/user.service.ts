@@ -4,6 +4,7 @@ import { User } from 'src/generated/prisma/client';
 import { CreateUserDto } from './domain/createUser.dto';
 import { UpdateUserDto } from './domain/updateUser.dto';
 import * as bcrypt from 'bcrypt';
+import { userSelectFields } from '../prisma/userSelectFields';
 
 @Injectable()
 export class UserService {
@@ -11,12 +12,17 @@ export class UserService {
 
   async create(body: CreateUserDto): Promise<User> {
     body.password = await this.hashPassword(body.password as string);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    return await this.prisma.user.create({ data: body as any });
+    const user = await this.prisma.user.create({
+      data: body as Required<CreateUserDto>,
+      select: userSelectFields,
+    });
+    return user as User;
   }
 
   async list() {
-    return await this.prisma.user.findMany();
+    return await this.prisma.user.findMany({
+      select: userSelectFields,
+    });
   }
 
   async show(id: number) {
@@ -30,7 +36,11 @@ export class UserService {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       body.password = await this.hashPassword(body.password);
     }
-    return await this.prisma.user.update({ where: { id }, data: body });
+    return await this.prisma.user.update({
+      where: { id },
+      data: body,
+      select: userSelectFields,
+    });
   }
 
   async delete(id: number) {
